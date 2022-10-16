@@ -3,13 +3,19 @@
 ### Dependencies configurations
 
 - `"test": "jest --watch",`
-  - This option in the **package.json** file makes sure that we test only the changes in each commit. This will keep monitoring the changes in each commit.
+  - This option in the **package.json** file makes sure that in we test only the changes in each commit. This will keep monitoring the changes in each commit.
   - There is also **--watchAll** flag, which will watch and test all the changes that we made starting from the beginning of the app till now
 - `"lint": "eslint ."`
   - Running the command **yarn test** will check for all the eslint issues in the app
   - We can also fix those issues if present with **eslint . --fix** or if we want to pass it from the yarn, then **yarn test -- --fix**
 - `"supertest": "^6.3.0"`
   - This package is used for testing HTTP calls
+- `npx http-server -c-1 -p 8080 -P http://localhost:3000`
+  - We used the build folder of a React app to serve as a frontend
+  - We used **http-server** package to serve it in the port **8080** and all the api calls made by the app which it makes to the same port 8080 to proxy it to **http://localhost:3000**
+  - We are running our backend on port **3000**, so all the api calls are coming to our backend only
+  - **-c-1** flag is used to not to store cache as **http-server** keeps the cache by default
+  - All other details regarding **http-server** can be known at **https://www.npmjs.com/package/http-server**
 
 ### ESLint configurations
 
@@ -50,3 +56,4 @@
 ### References
 
 - ![Asynchronous Test](/readme_assets/asynchronous_test.png)
+- ![Synchronize Models](/readme_assets/synchronize_models.png)
