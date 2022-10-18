@@ -16,6 +16,13 @@
   - We are running our backend on port **3000**, so all the api calls are coming to our backend only
   - **-c-1** flag is used to not to store cache as **http-server** keeps the cache by default
   - All other details regarding **http-server** can be known at **https://www.npmjs.com/package/http-server**
+- `"config": "^3.3.8",`
+  - This package is used for handling different configurations for different environment
+  - We can set the environment in the scripts itself like:
+    - > "start": "cross-env NODE_ENV=development nodemon index",
+      > "test": "cross-env NODE_ENV=test jest --watch"
+  - This will make the test and dev DB(or anything accordingly, but I have done with DB as per now) different as per the value of NODE_ENV
+  - **cross-env** makes the scripts to change/work according to different OS/systems
 
 ### ESLint configurations
 
