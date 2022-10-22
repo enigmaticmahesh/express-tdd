@@ -89,18 +89,6 @@ describe('User Registration', () => {
     expect(body.validationErrors).not.toBeUndefined();
   });
 
-  it('returns Username cannot be null when username is null', async () => {
-    const response = await postUser({ ...validUser, username: null });
-    const body = response.body;
-    expect(body.validationErrors.username).toBe('Username cannot be null');
-  });
-
-  it('returns Email cannot be null when email is null', async () => {
-    const response = await postUser({ ...validUser, email: null });
-    const body = response.body;
-    expect(body.validationErrors.email).toBe('Email cannot be null');
-  });
-
   it('returns both the validation errors when username and email is null', async () => {
     const response = await postUser({
       ...validUser,
@@ -111,9 +99,29 @@ describe('User Registration', () => {
     expect(Object.keys(body.validationErrors)).toEqual(['username', 'email']);
   });
 
-  it('returns Password cannot be null when password is null', async () => {
-    const response = await postUser({ ...validUser, password: null });
-    const body = response.body;
-    expect(body.validationErrors.password).toBe('Password cannot be null');
-  });
+  // Method 1 for Dynamic tests
+  // it.each([
+  //   ['username', 'Username cannot be null'],
+  //   ['email', 'Email cannot be null'],
+  //   ['password', 'Password cannot be null'],
+  // ])('When %s is null %s is received', async (field, expectedMessage) => {
+  //   const response = await postUser({ ...validUser, [field]: null });
+  //   const body = response.body;
+  //   expect(body.validationErrors[field]).toBe(expectedMessage);
+  // });
+
+  // Method 2 for Dynamic tests
+  it.each`
+    field         | expectedMessage
+    ${'username'} | ${'Username cannot be null'}
+    ${'email'}    | ${'Email cannot be null'}
+    ${'password'} | ${'Password cannot be null'}
+  `(
+    'return $expectedMessage when $field is null',
+    async ({ field, expectedMessage }) => {
+      const response = await postUser({ ...validUser, [field]: null });
+      const body = response.body;
+      expect(body.validationErrors[field]).toBe(expectedMessage);
+    }
+  );
 });
